@@ -28,5 +28,6 @@ elsif A == B || A == C || B == C
   puts 'This is isosceles triangle'
 elsif apple(A, B, C)
   puts 'This is rectangular triangle'
-elsif  puts 'The triangle of the other type'
+else
+  puts 'The triangle of the other type'
 end
