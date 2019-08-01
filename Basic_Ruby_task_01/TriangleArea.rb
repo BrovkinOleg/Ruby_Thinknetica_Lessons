@@ -1,9 +1,8 @@
-
 # author Brovkin Oleg
 # 31.07.2019
-puts "Enter length of the base (cm), please"
+puts 'Enter length of the base (cm), please'
 length_of_base = gets.chomp
-puts "Enter height of triangle (cm)"
+puts 'Enter height of triangle (cm)'
 height = gets.chomp
 area = height.to_i * length_of_base.to_i / 2
 
