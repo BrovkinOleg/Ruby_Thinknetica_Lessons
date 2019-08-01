@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6d62301-446d-4ed4-9167-ba8f1f133633" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Basic_Ruby_task_01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Basic_Ruby_task_01.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nice_weight.rb" beforeDir="false" afterPath="$PROJECT_DIR$/nice_weight.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/right_triangle.rb" beforeDir="false" afterPath="$PROJECT_DIR$/right_triangle.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/triangle_area.rb" beforeDir="false" afterPath="$PROJECT_DIR$/triangle_area.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +30,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/right_triangle.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="726">
@@ -43,9 +39,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/triangle_area.rb">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -60,6 +60,7 @@
         <option value="$APPLICATION_CONFIG_DIR$/rubymine64.exe.vmoptions" />
         <option value="$PROJECT_DIR$/nice_weight.rb" />
         <option value="$PROJECT_DIR$/right_triangle.rb" />
+        <option value="$PROJECT_DIR$/triangle_area.rb" />
       </list>
     </option>
   </component>
@@ -195,12 +196,12 @@
       <workItem from="1564645613411" duration="50000" />
       <workItem from="1564645683742" duration="899000" />
       <workItem from="1564647065926" duration="197000" />
-      <workItem from="1564647291030" duration="1832000" />
+      <workItem from="1564647291030" duration="2462000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2029000" />
+    <option name="totallyTimeSpent" value="2659000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -279,9 +280,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/triangle_area.rb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/nice_weight.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -300,6 +298,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="726">
           <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/triangle_area.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
         </state>
       </provider>
     </entry>
