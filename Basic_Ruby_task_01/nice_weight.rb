@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # author Brovkin Oleg
 # 31.07.2019
 puts 'Enter your name, please'
