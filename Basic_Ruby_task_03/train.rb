@@ -3,7 +3,7 @@
 # author Brovkin Oleg
 # 04.08.2019
 
-require_relative 'route_class.rb'
+require_relative 'route.rb'
 # class Train must get name, type(cargo, passenger), count of wagons
 # can change velocity, return velocity, return number of wagons,
 # can change number of wagons if velocity.zero? == true
@@ -16,20 +16,19 @@ class Train
               :station_name, :station_number
 
   def initialize(number, type, wagons)
-    @number = number.to_s
-    @type = type.to_s
+    @number = number
+    @type = type
     @speed = 0
-    @wagons = wagons.to_i
+    @wagons = wagons
   end
 
   def route_set(route)
-    # @route = Array.new(route.stations_list)
-    @route = route.stations_list
+    @route = route
     @station_number = 0
   end
 
   def speed_set(speed)
-    @speed = speed.to_i
+    @speed = speed
   end
 
   def increment_wagons
@@ -42,28 +41,22 @@ class Train
 
   def next_station_set
     @station_number += 1 if @station_number < (@route.length - 1)
-    @station_name = @route[@station_number]
   end
 
   def prev_station_set
     @station_number -= 1 if @station_number.nonzero?
-    @station_name = @route[@station_number]
   end
 
-  # pointer can be in range -N,..0,..+N,
-  # so we can ask name of any station in route
-  def get_station_name(pointer)
-    num = pointer.to_i
-    @route[@station_number + num] unless @route[@station_number + num].nil?
+  def current_station_name
+    @route.stations_list[@station_number].name
+  end
+
+  def next_station_name
+    @route.stations_list[@station_number + 1].name
+  end
+
+  def prev_station_name
+    @route.stations_list[@station_number - 1].name
   end
 end
-
-my_route = Route.new(10, 'First', 100, 'Last')
-my_route.add_station(20, 'station_a')
-my_route.add_station(30, 'station_b')
-my_route.add_station(40, 'station_c')
-my_route.add_station(50, 'station_d')
-my_route.add_station(60, 'station_e')
-# my_route.delete_station('station_c')
-puts my_route.stations_list
 
