@@ -2,8 +2,7 @@
 
 # author Brovkin Oleg
 # 04.08.2019
-require_relative 'route.rb'
-require_relative 'train.rb'
+
 # class Station must get trains by one, returns list of trains,
 # can return list of trains by type of train (cargo, passenger),
 # can clear train one by one
@@ -24,5 +23,12 @@ class Station
   def remove_train(train)
     @trains_list[train]&.delete
   end
-end
 
+  def trains_type_list(type)
+    trains_type = []
+    @trains_list.each do |train|
+      trains_type << train if train.type == type
+    end
+    trains_type
+  end
+end

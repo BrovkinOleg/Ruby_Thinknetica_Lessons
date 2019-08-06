@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-
-# author Brovkin Oleg
-# 04.08.2019
+#
+# # author Brovkin Oleg
+# # 04.08.2019
 
 require_relative 'route.rb'
 # class Train must get name, type(cargo, passenger), count of wagons
@@ -12,8 +12,7 @@ require_relative 'route.rb'
 # can return name of the station with reference to current station
 class Train
   # attr_accessor :speed
-  attr_reader :number, :type, :wagons, :route, :speed,
-              :station_name, :station_number
+  attr_reader :number, :type, :wagons, :route, :speed, :station_number
 
   def initialize(number, type, wagons)
     @number = number

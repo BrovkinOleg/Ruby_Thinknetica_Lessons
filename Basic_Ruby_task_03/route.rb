@@ -18,7 +18,14 @@ class Route
   end
 
   def delete_station(name)
-    @stations_list[name]&.delete
+    @stations_list.each.delete_if { |station| station.name == name }
+    # @stations_list[name]&.delete
+  end
+
+  def stations_list_sort
+    # @stations_list.sort_by { |station| station.location }
+    @stations_list = @stations_list.sort_by(&:location)
   end
 end
+
 
