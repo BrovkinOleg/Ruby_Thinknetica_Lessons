@@ -13,18 +13,24 @@ class Route
     @stations_list = [first_station, last_station]
   end
 
-  def add_station(name)
-    @stations_list << name
+  def add_station(station)
+    @stations_list << station
+    stations_list_sort
   end
 
-  def delete_station(name)
-    @stations_list.each.delete_if { |station| station.name == name }
-    # @stations_list[name]&.delete
+  def delete_station(index)
+    @stations_list.delete_at(index) if @stations_list.length > 2
+    stations_list_sort
   end
 
-  def sort_stations_list
+  def stations_list_sort
     # @stations_list.sort_by { |station| station.location }
     @stations_list = @stations_list.sort_by(&:location)
+  end
+
+  def first_last_name
+    @stations_list.first.name.to_s \
+    + '-' + @stations_list.last.name.to_s
   end
 end
 

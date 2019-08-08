@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-#
-# # author Brovkin Oleg
-# # 04.08.2019
+
+# author Brovkin Oleg
+# 04.08.2019
 
 require_relative 'route.rb'
 # class Train must get name, type(cargo, passenger), count of wagons
