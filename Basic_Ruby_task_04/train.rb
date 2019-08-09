@@ -51,7 +51,6 @@ class Train
 
   private
 
-  # don't call from child class
   def first_station?
     @place_station.zero?
   end

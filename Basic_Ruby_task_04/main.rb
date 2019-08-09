@@ -1,93 +1,66 @@
 # frozen_string_literal: true
 
 # author Brovkin Oleg
-# 06.08.2019
-require_relative 'route_menu'
-require_relative 'train_menu'
+# 08.08.2019
+
 require_relative 'passenger_train'
 require_relative 'cargo_train'
 require_relative 'route'
 require_relative 'train'
 require_relative 'station'
 require_relative 'wagon'
+require_relative 'rail_road'
 
-# global arrays for stations, trains, routers
-$stations = []
-$stations_index = 0
-$routes = []
-$routes_index = 0
-$trains = []
-$trains_index = 0
+hub = RailRoad.new
 
-#=== just for test: add stations, routes, trains ===
-require_relative 'station_route_train_loads'
+# fill data to stations, routes, trains
+hub.stations << moscow = Station.new('Moscow', 0)
+hub.stations << murmansk = Station.new('Murmansk', 600)
+hub.stations << brest = Station.new('Brest', 120)
+hub.stations << tula = Station.new('Tula', 100)
+hub.stations << orel = Station.new('Orel', 200)
+hub.stations << novgorod = Station.new('Novgorod', 300)
+hub.stations << pskov = Station.new('Pskov', 150)
+hub.stations << minsk = Station.new('Minsk', 250)
+hub.stations << mogilev = Station.new('Mogilev', 350)
+hub.stations << kiev = Station.new('Kiev', 450)
 
-def station_instance_add
-  stations_list_show
-  puts 'tape name of station, please'
-  name = gets.chomp
-  puts 'tape location \'200\', please'
-  location = gets.chomp.to_i
-  $stations << Station.new(name, location)
-  stations_list_show
-  main_menu_hint
+hub.routes << north = Route.new(moscow, murmansk)
+north.add_station(tula)
+north.add_station(orel)
+north.add_station(novgorod)
+
+hub.routes << west = Route.new(tula, brest)
+west.add_station(pskov)
+west.add_station(minsk)
+west.add_station(mogilev)
+west.add_station(kiev)
+
+hub.routes << south = Route.new(orel, pskov)
+south.add_station(tula)
+south.add_station(minsk)
+south.add_station(orel)
+south.add_station(kiev)
+
+hub.routes << east = Route.new(kiev, minsk)
+east.add_station(novgorod)
+east.add_station(minsk)
+east.add_station(brest)
+east.add_station(kiev)
+
+def random_name
+  ('0'..'9').to_a.sample(3).join.capitalize
 end
-
-def station_trains_placed
-  trains_list_show
-  stations_list_show
-  puts 'select station index, please'
-  index = gets.chomp.to_i
-  output = "trains placed on #{$stations[index].name} => "
-  $trains.each do |train|
-    if $stations[index].name == train.route.stations_list[train.place_station].name
-      output += train.number + ', '
-    end
-  end
-  puts output
+(0..3).each do |i|
+  hub.trains << PassengerTrain.new(random_name)
+  hub.trains[i].route_set(hub.routes[i])
 end
-
-def main_menu_hint
-  puts ''
-  puts '=== Main_Menu_Hint ==='
-  puts '1 : stations list show'
-  puts '2 : routes list show'
-  puts '3 : trains list show'
-  puts '4 : station instance add'
-  puts '5 : route Menu (add, route change, edit stations)'
-  puts '6 : train Menu (add, route set, edit wagons)'
-  puts '7 : trains placed on station list show'
-  puts '10: Main_Menu_Hint'
+(0..3).each do |i|
+  hub.trains << CargoTrain.new(random_name)
+  hub.trains[i + 4].route_set(hub.routes[i])
 end
+hub.trains.each { |train| train.place_station = 0 }
 
-def wrong_hint
-  puts 'wrong number, try again'
-end
-
-#--------- main_loop ---------------
-main_menu_hint
-loop do
-  choice = gets.chomp.to_i
-  case choice
-  when 1
-    stations_list_show
-  when 2
-    routes_list_show
-  when 3
-    trains_list_show
-  when 4
-    station_instance_add
-  when 5
-    route_menu
-  when 6
-    train_menu
-  when 7
-    station_trains_placed
-  when 10
-    main_menu_hint
-  else
-    wrong_hint
-    main_menu_hint
-  end
-end
+#============= start =======================
+hub.main_menu
 

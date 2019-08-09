@@ -21,6 +21,6 @@ class CargoTrain < Train
 
   # type check for cargo wagon
   def check?(wagon)
-    wagon.type == CARGO_TRAIN_TYPE && @speed.zero?
+    wagon.type == @type && @speed.zero?
   end
 end
