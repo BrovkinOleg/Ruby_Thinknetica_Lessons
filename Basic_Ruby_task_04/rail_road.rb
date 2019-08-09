@@ -63,7 +63,8 @@ class RailRoad
     puts ''
     puts '=== route_Menu_Hint ==='
     routes_list_show
-    puts 'current route => ' + @routes[@routes_index].first_last_name.to_s
+    name = @routes[@routes_index]&.first_last_name
+    puts "current route => #{name}"
     route_stations_list_show
     puts '1 : add new route'
     puts '2 : select next route in list'
@@ -111,7 +112,7 @@ class RailRoad
   def routes_list_show
     output = 'routes => '
     index = 0
-    @routes.each do |route|
+    @routes&.each do |route|
       output += index.to_s + ':' + route.first_last_name + '  '
       index += 1
     end
@@ -121,7 +122,7 @@ class RailRoad
   def route_stations_list_show
     output = 'route stations list => '
     index = 0
-    @routes[@routes_index].stations_list.each do |station|
+    @routes[@routes_index]&.stations_list&.each do |station|
       output += index.to_s + ':' + station.name + ', '
       index += 1
     end
@@ -161,7 +162,7 @@ class RailRoad
     stations_list_show
     puts 'select station number for add, please'
     index = gets.chomp.to_i
-    @routes[@routes_index].add_station(@stations[index])
+    @routes[@routes_index]&.add_station(@stations[index])
     route_menu_hint
   end
 
@@ -169,7 +170,7 @@ class RailRoad
     route_stations_list_show
     puts 'select station number for remove, please'
     index = gets.chomp.to_i
-    @routes[@routes_index].delete_station(index)
+    @routes[@routes_index]&.delete_station(index)
     route_menu_hint
   end
 
@@ -189,13 +190,12 @@ class RailRoad
     stations_list_show
     puts 'select station index, please'
     index = gets.chomp.to_i
-    output = "trains placed on #{@stations[index].name} => "
+    output = "trains placed on #{@stations[index]&.name} => "
     @trains.each do |train|
-      if @stations[index].name == train.route.stations_list[train.place_station].name
-        output += train.number + ', '
-      end
+      find_name = train.route.stations_list[train.place_station].name
+      output += train.number + ', ' if @stations[index].name == find_name
     end
-  puts output
+    puts output
   end
 
   def train_menu_hint
@@ -233,10 +233,10 @@ class RailRoad
       when 6
         train_wagon_remove
       when 7
-        @trains[@trains_index].next_station_set
+        @trains[@trains_index]&.next_station_set
         trains_place_show
       when 8
-        @trains[@trains_index].prev_station_set
+        @trains[@trains_index]&.prev_station_set
         trains_place_show
       when 10
         main_menu_hint
@@ -259,18 +259,20 @@ class RailRoad
   end
 
   def this_train_wagons_show
-    puts 'train number ' + @trains[@trains_index].number.to_s + \
-         ' have ' + @trains[@trains_index].wagons.to_s + ' wagons'
+    train = @trains[@trains_index]&.number.to_s
+    number = @trains[@trains_index]&.wagons.to_s
+    puts "train number \"#{train}\" have #{number} wagons"
   end
 
   def trains_place_show
-    puts 'train now places at \'' \
-  + @trains[@trains_index].current_station_name + '\' station'
+    check = @trains[@trains_index]&.route.nil?
+    name = @trains[@trains_index]&.current_station_name unless check
+    puts "train now places at \"#{name}\" station"
   end
 
   def this_train_place_show
-    name = @trains[@trains_index].current_station_name
-    train_number = @trains[@trains_index].number.to_s
+    name = @trains[@trains_index]&.current_station_name
+    train_number = @trains[@trains_index]&.number.to_s
     puts "train = #{train_number} now place on \"#{name}\" station"
   end
 
@@ -304,22 +306,22 @@ class RailRoad
     routes_list_show
     puts 'select number of route, please'
     @routes_index = gets.chomp.to_i
-    @trains[@trains_index].route_set(@routes[@routes_index])
+    @trains[@trains_index]&.route_set(@routes[@routes_index]) unless rt_nil?
     train_menu_hint
   end
 
   def train_wagon_add
     puts 'select type of wagon \'cargo\' or \'pass\' '
     if gets.chomp == 'pass'
-      @trains[@trains_index].wagon_add(Wagon.new('pass'))
+      @trains[@trains_index]&.wagon_add(Wagon.new('pass'))
     else
-      @trains[@trains_index].wagon_add(Wagon.new('cargo'))
+      @trains[@trains_index]&.wagon_add(Wagon.new('cargo'))
     end
     train_menu_hint
   end
 
   def train_wagon_remove
-    @trains[@trains_index].wagon_remove.to_s
+    @trains[@trains_index]&.wagon_remove.to_s
     train_menu_hint
   end
 
@@ -327,11 +329,17 @@ class RailRoad
     puts 'wrong number, try again'
   end
 
-  def seed
-    puts 'hello'
-    # тестовая загрузка ст., поездов, ..
+  def st_nil?
+    @stations[0].nil?
   end
 
+  def rt_nil?
+    @routes[0].nil?
+  end
+
+  def tr_nil?
+    @trains[0].nil?
+  end
 end
 
 
