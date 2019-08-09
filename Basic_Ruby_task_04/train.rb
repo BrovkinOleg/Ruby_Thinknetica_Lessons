@@ -17,11 +17,11 @@ class Train
   def initialize(number)
     @number = number
     @speed = 0
-    @wagons = 10
+    @wagons = []
   end
 
   def wagon_remove
-    @wagons -= 1 if @wagons > 1 && @speed.zero?
+    @wagons.pop if @wagons.length > 1 && @speed.zero?
   end
 
   def route_set(route)

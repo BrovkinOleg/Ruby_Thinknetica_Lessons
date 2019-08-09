@@ -6,7 +6,7 @@
 require_relative 'train'
 # new class for passenger_train
 class PassengerTrain < Train
-  attr_reader :type, :number
+  attr_reader :number
 
   def initialize(number)
     @type = 'pass'
@@ -14,13 +14,6 @@ class PassengerTrain < Train
   end
 
   def wagon_add(wagon)
-    @wagons += 1 if @speed.zero? && wagon.type == @type
-  end
-
-  private
-
-  # type check for pass wagon
-  def check?(wagon)
-    wagon.type == @type && @speed.zero?
+    @wagons << wagon if @speed.zero? && wagon.type == @type
   end
 end

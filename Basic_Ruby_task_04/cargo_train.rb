@@ -10,17 +10,10 @@ class CargoTrain < Train
 
   def initialize(number)
     @type = 'cargo'
-    @number = number
+    super(number)
   end
 
   def wagon_add(wagon)
-    @wagons += 1 if @speed.zero? && wagon.type == @type
-  end
-
-  private
-
-  # type check for cargo wagon
-  def check?(wagon)
-    wagon.type == @type && @speed.zero?
+    @wagons << wagon if @speed.zero? && wagon.type == @type
   end
 end

@@ -6,7 +6,22 @@
 class Wagon
   attr_reader :type
 
-  def initialize(type)
+  def initialize
     @type = type
+  end
+end
+
+# for pass train
+class PassWagon < Wagon
+
+  def initialize
+    @type = 'pass'
+  end
+end
+# for cargo train
+class CargoWagon < Wagon
+
+  def initialize
+    @type = 'cargo'
   end
 end
