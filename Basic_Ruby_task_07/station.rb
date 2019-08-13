@@ -25,9 +25,9 @@ class Station
   def initialize(name, location)
     @name = name
     @location = location
+    validate!
     @trains_list = []
     @stations_counter = 0
-    validate!
     @@stations_all << self
     register_instance
   end

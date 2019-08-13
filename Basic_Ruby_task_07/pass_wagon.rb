@@ -8,7 +8,5 @@ require_relative 'wagon'
 # for pass train
 class PassWagon < Wagon
 
-  def initialize
-    @type = 'pass'
-  end
+  def initialize; end
 end

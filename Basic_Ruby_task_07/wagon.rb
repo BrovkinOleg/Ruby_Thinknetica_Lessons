@@ -22,7 +22,8 @@ class Wagon
   protected
 
   def validate!
-    raise 'Type must be: \'cargo\' or \'pass\'' if name !~ NAME
+    raise 'Type must be: \'cargo\' or \'pass\'' \
+           if type != 'cargo' && type != 'pass'
 
     true
   end

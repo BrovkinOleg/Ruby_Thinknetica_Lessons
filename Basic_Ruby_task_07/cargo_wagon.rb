@@ -8,7 +8,5 @@ require_relative 'wagon'
 # for cargo train
 class CargoWagon < Wagon
 
-  def initialize
-    @type = 'cargo'
-  end
+  def initialize; end
 end
