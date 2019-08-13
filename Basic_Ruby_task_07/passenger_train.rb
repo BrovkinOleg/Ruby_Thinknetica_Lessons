@@ -11,13 +11,12 @@ class PassengerTrain < Train
   attr_reader :number, :trains_counter
 
   def initialize(number)
-    @type = 'pass'
     super
     @trains_counter = 0
     register_instance
   end
 
   def wagon_add(wagon)
-    @wagons << wagon if @speed.zero? && wagon.type == @type
+    @wagons << wagon if @speed.zero?
   end
 end
