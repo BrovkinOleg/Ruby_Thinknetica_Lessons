@@ -23,11 +23,11 @@ class RailRoad
       choice = gets.chomp.to_i
       case choice
       when 1
-        stations_list_show
+        all_stations_list_show
       when 2
         routes_list_show
       when 3
-        trains_list_show
+        all_trains_list_show
       when 4
         station_instance_add
       when 5
@@ -198,7 +198,7 @@ class RailRoad
 
   def new_route_add
     routes_list_show
-    stations_list_show
+    all_stations_list_show
     puts 'select index of first route station'
     first = gets.chomp.to_i
     puts 'select index of last route station'
@@ -233,7 +233,7 @@ class RailRoad
 
   def route_station_add
     route_stations_list_show
-    stations_list_show
+    all_stations_list_show
     puts 'select station index for add, please'
     index = gets.chomp.to_i
     @routes[@routes_ptr]&.add_station(@stations[index])
@@ -249,7 +249,7 @@ class RailRoad
   end
 
   def station_instance_add
-    stations_list_show
+    all_stations_list_show
     puts 'enter name of station, please'
     name = gets.chomp
     puts 'enter location \'200\', please'
@@ -264,7 +264,7 @@ class RailRoad
       return
     end
     @stations << Station.new(name, location)
-    stations_list_show
+    all_stations_list_show
     main_menu_hint
   end
 
@@ -297,14 +297,16 @@ class RailRoad
 
   def this_train_wagons_show
     train = @trains[@trains_ptr]&.number.to_s
-    number = @trains[@trains_ptr]&.wagons.length.to_s
+    number = @trains[@trains_ptr]&.wagons.length
     puts "train number \"#{train}\" have #{number} wagons"
   end
 
   def trains_place_show
-    check = @trains[@trains_ptr]&.route.nil?
-    name = @trains[@trains_ptr]&.current_station_name unless check
-    puts "current train#{@trains[@trains_ptr].to_s}now places at \"#{name}\" station"
+    # check = @trains[@trains_ptr]&.route.nil?
+    if @trains[@trains_ptr]&.route.nil?
+      name = @trains[@trains_ptr]&.current_station_name
+      puts "current train#{@trains[@trains_ptr]} now places at \"#{name}\" station"
+    end
   end
 
   def this_train_place_show
@@ -314,7 +316,7 @@ class RailRoad
   end
 
   def new_train_add
-    trains_list_show
+    all_trains_list_show
     puts 'enter train number like: \'ABC-23\''
     number = gets.chomp
     begin
