@@ -32,8 +32,10 @@ class Station
     register_instance
   end
 
-  def train_check(&block)
-    @trains_list.each { |train| block.call(train) } if trains?
+  def each_train
+    @trains_list.each do |train|
+      yield(train) if @trains_list.length.nonzero?
+    end
   end
 
   def trains?
@@ -45,7 +47,10 @@ class Station
   end
 
   def remove_train(train)
-    @trains_list[train]&.delete
+    @trains_list.each_with_index do |value, i|
+      @trains_list.delete_at(i) if train == value
+    end
+    @trains_list.compact
   end
 
   def trains_type_list(type)

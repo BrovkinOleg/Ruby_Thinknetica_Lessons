@@ -33,6 +33,7 @@ class Route
 
   def delete_station(index)
     @stations_list.delete_at(index) if @stations_list.length > 2
+    @stations_list.compact
     stations_list_sort
   end
 

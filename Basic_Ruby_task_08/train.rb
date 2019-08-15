@@ -28,8 +28,10 @@ class Train
     @@trains[number] = self
   end
 
-  def wagon_check(&block)
-    @wagons.each { |wagon| block.call(wagon) }
+  def each_wagon
+    @wagons.each do |wagon|
+      yield(wagon) if @wagons.length.nonzero?
+    end
   end
 
   def self.find(number)
@@ -38,6 +40,7 @@ class Train
 
   def wagon_remove
     @wagons.pop if @wagons.length > 1 && @speed.zero?
+    @wagons.compact
   end
 
   def route_set(route)

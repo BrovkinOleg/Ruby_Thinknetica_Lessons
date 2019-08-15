@@ -65,7 +65,7 @@ places = 36
   1.upto(4) do
     busy += 1
     places -= 1
-    pass_wagon = PassWagon.new(places.to_int)
+    pass_wagon = PassWagon.new('pass', places.to_int)
     pass_wagon.busy_set(busy)
     hub.trains[i].wagon_add(pass_wagon)
   end
@@ -79,7 +79,7 @@ volume = 63
   1.upto(6) do
     busy += 2
     volume -= 2
-    cargo_wagon = CargoWagon.new(volume)
+    cargo_wagon = CargoWagon.new('cargo', volume.to_int)
     cargo_wagon.busy_set(busy)
     hub.trains[i + 4].wagon_add(cargo_wagon)
   end
@@ -100,5 +100,6 @@ end
 # number = 'ABC-12'
 # Train.new(number).valid?
 # hub.new_train_add
+# hub.train_move_to_next_station
 
 hub.main_menu

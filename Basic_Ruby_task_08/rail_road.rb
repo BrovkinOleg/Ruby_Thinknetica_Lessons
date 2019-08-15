@@ -87,13 +87,9 @@ class RailRoad
       when 6
         train_wagon_remove
       when 7
-        @trains[@trains_ptr]&.next_station_set
-        this_train_place_show
-        train_menu_hint
+        train_move_to_next_station
       when 8
-        @trains[@trains_ptr]&.prev_station_set
-        this_train_place_show
-        train_menu_hint
+        train_move_to_prev_station
       when 9
         wagon_busy_set
       when 0
@@ -164,6 +160,39 @@ class RailRoad
     puts '8 : train move to prev station'
     puts '9 : seats (or load volume) set'
     puts '0 : return to main menu'
+  end
+
+  def train_move_to_next_station
+    clear_train_from_all_stations
+    @trains[@trains_ptr]&.next_station_set
+    push_train_to_station
+    this_train_place_show
+    train_menu_hint
+  end
+
+  def train_move_to_prev_station
+    clear_train_from_all_stations
+    @trains[@trains_ptr]&.prev_station_set
+    push_train_to_station
+    this_train_place_show
+    train_menu_hint
+  end
+
+  def clear_train_from_all_stations
+    leave = @trains[@trains_ptr]
+    @stations.each do |station|
+      station.each_train do |train|
+        station.remove_train(leave) if leave.number == train.number
+      end
+    end
+  end
+
+  def push_train_to_station
+    pointer = @trains[@trains_ptr].place_station
+    arrive = @trains[@trains_ptr].route.stations_list[pointer]
+    @stations.each do |station|
+      station.add_train(@trains[@trains_ptr]) if arrive.name == station.name
+    end
   end
 
   def all_stations_list_show
@@ -275,9 +304,7 @@ class RailRoad
     index = gets.chomp.to_i
     output = "trains placed on \"#{@stations[index]&.name}\" station: "
     if @stations[index].trains?
-      @stations[index].train_check do |train|
-        output += train.to_s
-      end
+      @stations[index].each_train { |train| output += train.to_s }
     else
       output = "no trains placed on #{@stations[index]&.name} station"
     end
@@ -337,22 +364,14 @@ class RailRoad
 
   def train_wagons_info
     train_number = @trains[@trains_ptr].number
-    if pass_train?
-      message = "Pass_train \"#{train_number}\" (seats/busy)"
-      ptr = 1
-      @trains[@trains_ptr].wagon_check do |wagon|
-        message += " wagon[#{ptr}]=#{wagon.seats_amount}/#{wagon.busy}"
-        ptr += 1
-      end
-    else
-      message = "Cargo_train \"#{train_number}\" (volume/busy)"
-      ptr = 1
-      @trains[@trains_ptr].wagon_check do |wagon|
-        message += " wagon[#{ptr}]=#{wagon.volume}/#{wagon.busy}"
-        ptr += 1
-      end
+    print "Pass_train \"#{train_number}\" (seats/busy)" if pass_train?
+    print "Cargo_train \"#{train_number}\" (volume/busy)" unless pass_train?
+    ptr = 0
+    @trains[@trains_ptr].each_wagon do |wagon|
+      ptr += 1
+      print " wagon[#{ptr}]=#{wagon.number}/#{wagon.busy}"
     end
-    puts message
+    puts ''
   end
 
   def prev_train_select
@@ -374,8 +393,8 @@ class RailRoad
 
   def train_wagon_add
     # instance_of? - true only for the class, not for parent class
-    wagon = CargoWagon.new(64)
-    wagon = PassWagon.new(36) if \
+    wagon = CargoWagon.new('cargo', 64)
+    wagon = PassWagon.new('pass', 36) if \
       @trains[@trains_ptr].instance_of?(PassengerTrain)
     @trains[@trains_ptr]&.wagon_add(wagon)
     train_menu_hint

@@ -6,11 +6,17 @@ require_relative 'manufacturer'
 # this class have type ('pass', 'cargo')and 'weight'
 class Wagon
   include Manufacturer
-  attr_reader :type
+  attr_reader :type, :busy, :number
 
-  def initialize(type)
+  def initialize(type, number)
     @type = type
     validate!
+    @busy = 0
+    @number = number
+  end
+
+  def busy_set(busy)
+    @busy = busy if busy <= @number
   end
 
   def valid?
