@@ -99,6 +99,6 @@ end
 # puts Train.new('ASD-32').valid?
 # number = 'ABC-12'
 # Train.new(number).valid?
+# hub.new_train_add
 
 hub.main_menu
-

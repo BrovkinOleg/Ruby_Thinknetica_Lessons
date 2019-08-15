@@ -50,8 +50,5 @@ class Route
   def validate!
     raise 'First Station looks: \'Moscow\'' if first_station.name !~ STATION
     raise 'Last Station looks: \'Tula\'' if last_station.name !~ STATION
-    # raise 'Station must be different'\
-    #       if first_station.name == last_station.name
-
   end
 end

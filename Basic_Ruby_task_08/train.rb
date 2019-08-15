@@ -54,7 +54,7 @@ class Train
   end
 
   def current_station_name
-    @route.stations_list[@place_station].name
+    @route.stations_list[@place_station]&.name
   end
 
   def next_station_name
@@ -69,7 +69,6 @@ class Train
 
   def validate!
     raise 'Number must look like: \'ABC-12\'' if number !~ NUMBER
-
   end
 
   private
@@ -82,4 +81,3 @@ class Train
     @place_station == @route.stations_list.length - 1
   end
 end
-

@@ -7,7 +7,6 @@ require_relative 'train'
 
 # new class for passenger_train
 class PassengerTrain < Train
-
   attr_reader :number, :trains_counter
 
   def initialize(number)

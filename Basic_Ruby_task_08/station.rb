@@ -61,6 +61,5 @@ class Station
   def validate!
     raise 'Name must be like: \'Moscow\'' if name !~ NAME
     raise 'Location must be: from 0 to 1000' if location > 1000
-
   end
 end

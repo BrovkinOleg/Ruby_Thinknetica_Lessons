@@ -5,7 +5,6 @@
 
 # global arrays for stations, trains, routers
 class RailRoad
-
   attr_accessor :stations, :trains, :routes
 
   def initialize
@@ -89,11 +88,11 @@ class RailRoad
         train_wagon_remove
       when 7
         @trains[@trains_ptr]&.next_station_set
-        trains_place_show
+        this_train_place_show
         train_menu_hint
       when 8
         @trains[@trains_ptr]&.prev_station_set
-        trains_place_show
+        this_train_place_show
         train_menu_hint
       when 9
         wagon_busy_set
@@ -108,10 +107,11 @@ class RailRoad
   end
 
   def wagon_busy_set
+    train_wagons_info
     puts 'enter wagon index for change'
     index = gets.chomp.to_i - 1
     if pass_train?
-      puts 'enter new busy seats number'
+      puts 'enter new busy seats amount'
     else
       puts 'enter new busy volume'
     end
@@ -152,7 +152,7 @@ class RailRoad
     puts ''
     puts '=== train_Menu_Hint ==='
     all_trains_list_show
-    trains_place_show
+    this_train_place_show
     train_wagons_info
     puts '1 : new train add'
     puts '2 : next train select '
@@ -295,20 +295,6 @@ class RailRoad
     puts output
   end
 
-  def this_train_wagons_show
-    train = @trains[@trains_ptr]&.number.to_s
-    number = @trains[@trains_ptr]&.wagons.length
-    puts "train number \"#{train}\" have #{number} wagons"
-  end
-
-  def trains_place_show
-    # check = @trains[@trains_ptr]&.route.nil?
-    if @trains[@trains_ptr]&.route.nil?
-      name = @trains[@trains_ptr]&.current_station_name
-      puts "current train#{@trains[@trains_ptr]} now places at \"#{name}\" station"
-    end
-  end
-
   def this_train_place_show
     name = @trains[@trains_ptr]&.current_station_name
     train_number = @trains[@trains_ptr]&.number.to_s
@@ -331,6 +317,10 @@ class RailRoad
     @trains << PassengerTrain.new(number) if type == 'pass'
     @trains << CargoTrain.new(number) if type == 'cargo'
     @trains_ptr = @trains.length - 1
+    routes_list_show
+    puts 'enter route index for the train'
+    index = gets.chomp.to_i
+    @trains[@trains_ptr].route_set(@routes[index])
     train_menu_hint
   end
 
@@ -351,14 +341,14 @@ class RailRoad
       message = "Pass_train \"#{train_number}\" (seats/busy)"
       ptr = 1
       @trains[@trains_ptr].wagon_check do |wagon|
-        message += " wagon#{ptr}:#{wagon.seats_amount}/#{wagon.busy}"
+        message += " wagon[#{ptr}]=#{wagon.seats_amount}/#{wagon.busy}"
         ptr += 1
       end
     else
       message = "Cargo_train \"#{train_number}\" (volume/busy)"
       ptr = 1
       @trains[@trains_ptr].wagon_check do |wagon|
-        message += " wagon#{ptr}:#{wagon.volume}/#{wagon.busy}"
+        message += " wagon[#{ptr}]=#{wagon.volume}/#{wagon.busy}"
         ptr += 1
       end
     end
@@ -385,7 +375,8 @@ class RailRoad
   def train_wagon_add
     # instance_of? - true only for the class, not for parent class
     wagon = CargoWagon.new(64)
-    wagon = PassWagon.new(36) if @trains[@trains_ptr].instance_of?(PassengerTrain)
+    wagon = PassWagon.new(36) if \
+      @trains[@trains_ptr].instance_of?(PassengerTrain)
     @trains[@trains_ptr]&.wagon_add(wagon)
     train_menu_hint
   end
@@ -399,17 +390,7 @@ class RailRoad
     puts 'wrong number, try again'
   end
 
-  def st_nil?
-    @stations[0].nil?
-  end
-
   def rt_nil?
     @routes[0].nil?
   end
-
-  def tr_nil?
-    @trains[0].nil?
-  end
 end
-
-
