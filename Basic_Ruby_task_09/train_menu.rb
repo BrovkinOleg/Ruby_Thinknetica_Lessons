@@ -26,27 +26,16 @@ def train_menu
   loop do
     choice = gets.chomp.to_i
     case choice
-    when 1
-      new_train_add
-    when 2
-      next_train_select
-    when 3
-      prev_train_select
-    when 4
-      train_route_select
-    when 5
-      train_wagon_add
-    when 6
-      train_wagon_remove
-    when 7
-      train_move_to_next_station
-    when 8
-      train_move_to_prev_station
-    when 9
-      wagon_busy_set
-    when 0
-      main_menu_hint
-      break
+    when 1 then new_train_add
+    when 2 then next_train_select
+    when 3 then prev_train_select
+    when 4 then train_route_select
+    when 5 then train_wagon_add
+    when 6 then train_wagon_remove
+    when 7 then train_move_to_next_station
+    when 8 then train_move_to_prev_station
+    when 9 then wagon_busy_set
+    when 0 then main_menu_hint
     else
       wrong_hint
       train_menu_hint

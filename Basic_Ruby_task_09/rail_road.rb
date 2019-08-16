@@ -37,22 +37,14 @@ class RailRoad
     loop do
       choice = gets.chomp.to_i
       case choice
-      when 1
-        all_stations_list_show
-      when 2
-        routes_list_show
-      when 3
-        all_trains_list_show
-      when 4
-        station_instance_add
-      when 5
-        route_menu
-      when 6
-        train_menu
-      when 7
-        trains_placed_on_the_station
-      when 0
-        main_menu_hint
+      when 1 then all_stations_list_show
+      when 2 then routes_list_show
+      when 3 then all_trains_list_show
+      when 4 then station_instance_add
+      when 5 then route_menu
+      when 6 then train_menu
+      when 7 then trains_placed_on_the_station
+      when 0 then main_menu_hint
       else
         wrong_hint
         main_menu_hint

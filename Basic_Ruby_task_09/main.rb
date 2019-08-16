@@ -15,9 +15,6 @@ require_relative 'rail_road'
 
 hub = RailRoad.new
 
-# hub.trains_placed_on_the_station
-# fill data to stations, routes, trains
-
 hub.stations << moscow = Station.new('Moscow', 0)
 hub.stations << murmansk = Station.new('Murmansk', 600)
 hub.stations << brest = Station.new('Brest', 120)

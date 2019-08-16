@@ -23,19 +23,12 @@ def route_menu
   loop do
     choice = gets.chomp.to_i
     case choice
-    when 1
-      new_route_add
-    when 2
-      next_route_select
-    when 3
-      prev_route_select
-    when 4
-      route_station_add
-    when 5
-      route_station_remove
-    when 0
-      main_menu_hint
-      break
+    when 1 then new_route_add
+    when 2 then next_route_select
+    when 3 then prev_route_select
+    when 4 then route_station_add
+    when 5 then route_station_remove
+    when 0 then main_menu_hint
     else
       wrong_hint
       route_menu_hint
