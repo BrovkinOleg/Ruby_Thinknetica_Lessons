@@ -6,7 +6,7 @@ module Valid
   def valid?
     validate!
     true
-  rescue RuntimeError => e
+  rescue RuntimeError
     false
   end
 end

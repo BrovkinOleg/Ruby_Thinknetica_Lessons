@@ -7,7 +7,6 @@ require_relative 'wagon'
 # this class have type ('pass', 'cargo')and 'weight'
 # for cargo train
 class CargoWagon < Wagon
-
   def free_volume
     @number - @busy
   end
