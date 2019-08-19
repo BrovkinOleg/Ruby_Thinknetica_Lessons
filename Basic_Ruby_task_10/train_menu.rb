@@ -47,17 +47,18 @@ def new_train_add
   all_trains_list_show
   puts 'enter train number like: \'ABC-23\''
   number = gets.chomp
+  puts 'enter train type \'pass\' or \'cargo\' ?'
+  type = gets.chomp.to_s
   begin
-    Train.new(number).valid?
-  rescue RuntimeError
-    wrong_hint
+    # Train.new(number).valid?
+    @trains << PassengerTrain.new(number) if type == 'pass'
+    @trains << CargoTrain.new(number) if type == 'cargo'
+  rescue RuntimeError => e
+    puts e.inspect
+    # wrong_hint
     train_menu_hint
     return
   end
-  puts 'enter train type \'pass\' or \'cargo\' ?'
-  type = gets.chomp.to_s
-  @trains << PassengerTrain.new(number) if type == 'pass'
-  @trains << CargoTrain.new(number) if type == 'cargo'
   @trains_ptr = @trains.length - 1
   routes_list_show
   puts 'enter route index for the train'

@@ -8,29 +8,17 @@ require_relative 'manufacturer'
 require_relative 'instance_counter'
 require_relative 'validation'
 require_relative 'accessors'
-
 # class Train
 class Train
   include Manufacturer
   include InstanceCounter
-  include Validation
-  extend Accessors
 
-  NUMBER = /^[A-Z]{3}-?\d{2}$/.freeze
-
-  attr_accessor_with_history :number
-
-  validate :number, :presence
-  validate :number, :format, NUMBER
-  validate :number, :type, Train
-
-  attr_accessor :speed, :place_station
+  attr_accessor :number, :speed, :place_station
   attr_reader :route, :wagons
   @@trains = {}
 
   def initialize(number, options = {})
     @number = number
-    validate!
     @speed = options[:speed] || 0
     @wagons = []
     @@trains[number] = self

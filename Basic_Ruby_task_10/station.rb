@@ -2,27 +2,26 @@
 
 # author Brovkin Oleg
 # 04.08.2019
-require_relative 'valid'
+# require_relative 'valid'
 require_relative 'instance_counter'
-
+require_relative 'validation'
+require_relative 'accessors'
 # class Station must get trains by one, returns list of trains,
 # can return list of trains by type of train (cargo, passenger),
 # can clear train one by one
 class Station
   include InstanceCounter
-  include Valid
-  # extend Accessors
+  # include Valid
+  extend Accessors
+  include Validation
 
   NAME = /^[A-Z][a-z]{2,14}$/.freeze
 
-  # attr_accessor_with_history :name
-
-  # validate :name, :presence
-  # validate :name, :format, NAME
-  # validate :name, :type, Station
+  validate :name, :presence
+  validate :name, :format, NAME
+  validate :location, :type, 'Integer'
 
   attr_accessor :name, :location
-  # attr_accessor :location
   attr_reader :trains_list
   @@stations_all = []
 
@@ -68,10 +67,10 @@ class Station
     trains_type
   end
 
-  protected
+  # protected
 
-  def validate!
-    raise 'Name must be like: \'Moscow\'' if name !~ NAME
-    raise 'Location must be: from 0 to 1000' if location > 1000
-  end
+  # def validate!
+  #   raise 'Name must be like: \'Moscow\'' if name !~ NAME
+  #   raise 'Location must be: from 0 to 1000' if location > 1000
+  # end
 end

@@ -4,15 +4,24 @@
 # 06.08.2019
 
 require_relative 'train'
+# require_relative 'validation'
+# require_relative 'accessors'
+
 # new class for cargo train
 class CargoTrain < Train
+  extend Accessors
+  include Validation
 
-  # validate :number, :type, CargoTrain
+  NUMBER = /^[A-Z]{3}-?\d{2}$/.freeze
+
+  validate :number, :presence
+  validate :number, :format, NUMBER
 
   attr_reader :number, :trains_counter
 
   def initialize(number)
     super
+    validate!
     @trains_counter = 0
     register_instance
   end

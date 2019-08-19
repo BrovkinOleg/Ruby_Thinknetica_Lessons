@@ -14,7 +14,7 @@ require_relative 'cargo_wagon'
 require_relative 'rail_road'
 
 hub = RailRoad.new
-
+# begin
 hub.stations << moscow = Station.new('Moscow', 0)
 hub.stations << murmansk = Station.new('Murmansk', 600)
 hub.stations << brest = Station.new('Brest', 120)
@@ -25,25 +25,32 @@ hub.stations << pskov = Station.new('Pskov', 150)
 hub.stations << minsk = Station.new('Minsk', 250)
 hub.stations << mogilev = Station.new('Mogilev', 350)
 hub.stations << kiev = Station.new('Kiev', 450)
-
+# rescue RuntimeError => e
+#   puts e.inspect
+# end
+# begin
 hub.routes << north = Route.new(moscow, murmansk)
+hub.routes << west = Route.new(tula, brest)
+hub.routes << south = Route.new(orel, pskov)
+hub.routes << east = Route.new(kiev, minsk)
+# rescue RuntimeError => e
+#   puts e.inspect
+# end
+
 north.add_station(tula)
 north.add_station(orel)
 north.add_station(novgorod)
 
-hub.routes << west = Route.new(tula, brest)
 west.add_station(pskov)
 west.add_station(minsk)
 west.add_station(mogilev)
 west.add_station(brest)
 
-hub.routes << south = Route.new(orel, pskov)
 south.add_station(tula)
 south.add_station(minsk)
 south.add_station(orel)
 south.add_station(kiev)
 
-hub.routes << east = Route.new(kiev, minsk)
 east.add_station(novgorod)
 east.add_station(minsk)
 east.add_station(brest)
@@ -57,28 +64,34 @@ end
 busy = 0
 places = 36
 (0..3).each do |i|
-  hub.trains << PassengerTrain.new(random_name)
-  hub.trains[i].route_set(hub.routes[i])
-  1.upto(4) do
-    busy += 1
-    places -= 1
-    pass_wagon = PassWagon.new('pass', places.to_int, busy: busy)
-    # pass_wagon.busy_set(busy)
-    hub.trains[i].wagon_add(pass_wagon)
+  begin
+    hub.trains << PassengerTrain.new(random_name)
+    hub.trains[i].route_set(hub.routes[i])
+    1.upto(4) do
+      busy += 1
+      places -= 1
+      pass_wagon = PassWagon.new('pass', places.to_int, busy: busy)
+      hub.trains[i].wagon_add(pass_wagon)
+    end
+  rescue RuntimeError => e
+    puts e.inspect
   end
 end
 
 busy = 0
 volume = 63
 (0..3).each do |i|
-  hub.trains << CargoTrain.new(random_name)
-  hub.trains[i + 4].route_set(hub.routes[i])
-  1.upto(6) do
-    busy += 1
-    volume -= 1
-    cargo_wagon = CargoWagon.new('cargo', volume.to_int, busy: busy)
-    # cargo_wagon.busy_set(busy)
-    hub.trains[i + 4].wagon_add(cargo_wagon)
+  begin
+    hub.trains << CargoTrain.new(random_name)
+    hub.trains[i + 4].route_set(hub.routes[i])
+    1.upto(6) do
+      busy += 1
+      volume -= 1
+      cargo_wagon = CargoWagon.new('cargo', volume.to_int, busy: busy)
+      hub.trains[i + 4].wagon_add(cargo_wagon)
+    end
+  rescue RuntimeError => e
+    puts e.inspect
   end
 end
 
@@ -89,10 +102,6 @@ hub.trains.each do |train|
     station.trains_list << train if station.name == landed_station
   end
 end
-
-# Train.validate(number, 'presence')
-# Train.validate(number, 'format', NUMBER)
-# Train.validate(number, 'type', String)
 
 #============= start =======================
 
