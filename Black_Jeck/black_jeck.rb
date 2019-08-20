@@ -15,35 +15,7 @@ class BlackJeck
     @result = 0
   end
 
-  load('menu_hint.rb')
-
-  def open_cards
-    show_result
-    show_user_and_dealer
-    user_menu_hint
-  end
-
-  def restart_game
-    @player.ini
-    @dealer.ini
-    start_menu
-  end
-
-  def next_game
-    @player.next_play
-    @dealer.next_play
-    start_menu
-  end
-
-  def start_menu
-    # puts 'Enter your name, please' if @player.player_name == ''
-    @player.player_name = 'Oleg'#gets.chomp.capitalize
-    @dealer.player_name = 'Jeck'
-    puts 'Let\'s start a game. Look at your two cards:'
-    sleep(1)
-    first_step_two_cards_get
-    user_menu
-  end
+  load('menu.rb')
 
   def first_step_two_cards_get
     @card_deck.init_card_deck
@@ -62,12 +34,12 @@ class BlackJeck
   end
 
   def check_results
-    @result = 1 if @player.fail? && @dealer.fail? \
-                   || @player.score == @dealer.score
-    @result = 2 if @player.fail? && @dealer.ok? \
-                   || @player.score < @dealer.score
-    @result = 3 if @player.ok? && @dealer.fail? \
-                   || @player.score > @dealer.score
+    @result = 1 if @player.score < @dealer.score
+    @result = 2 if @player.score > @dealer.score
+    @result = 3 if @player.score == @dealer.score
+    @result = 4 if @player.ok? && @dealer.fail?
+    @result = 5 if @player.fail? && @dealer.ok?
+    @result = 6 if @player.fail? && @dealer.fail?
   end
 
   def money_back
@@ -94,9 +66,9 @@ class BlackJeck
     puts 'That\'s all, look at your cards, please'
     choice = @result
     case choice
-    when 1 then money_back
-    when 2 then user_loss_money
-    when 3 then user_win_money
+    when 6, 3 then money_back
+    when 5, 1 then user_loss_money
+    when 4, 2 then user_win_money
     else
       puts "result is #{@result}"
     end
@@ -107,24 +79,16 @@ class BlackJeck
     @dealer.show_stars
   end
 
-  def user_add_card
-    @player.card_get(@card_deck.card_get)
-    show_user_and_stars if @player.ok? && @dealer.ok?
-    # show_result if @player.fail? || @dealer.fail?
+  def start_menu
+    puts 'Enter your name, please' if @player.player_name == ''
+    @player.player_name = gets.chomp.capitalize
+    @dealer.player_name = 'Jeck'
+    puts 'Let\'s start a game. Look at your two cards:'
     sleep(1)
-    user_menu_hint
-  end
-
-  def dealer_auto_work
-    sleep(1)
-    puts 'Dealer ==> Step missing' if @dealer.number_more?(17)
-    @dealer.card_get(@card_deck.card_get) unless @dealer.number_more?(17)
-    show_user_and_stars
-    puts @player.player_name.to_s + ', ... Your turn'
-    user_menu_hint
+    first_step_two_cards_get
+    user_menu
   end
 end
-
 #==================== check =====================
 q = BlackJeck.new
 q.start_menu
