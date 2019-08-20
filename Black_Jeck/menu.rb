@@ -54,6 +54,8 @@ def open_cards
   show_result
   show_user_and_dealer
   sleep(1)
+  puts 'enter any digit for new game'
+  gets.chomp.to_i
   puts ''
   next_game
 end

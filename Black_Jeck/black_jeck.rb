@@ -87,6 +87,7 @@ class BlackJeck
     sleep(1)
     first_step_two_cards_get
     user_menu
+    puts '... See you later ...'
   end
 end
 #==================== check =====================
