@@ -2,7 +2,7 @@
 
 # author Brovkin Oleg
 # 20.08.2019
-require_relative 'card_deck'
+require_relative 'deck'
 
 class Player
   attr_accessor :name
@@ -48,7 +48,7 @@ class Player
   end
 end
 #====================== check ===============================
-# array = CardDeck.new
+# array = Deck.new
 # dealer = Player.new('Jeck')
 # user = Player.new('Oleg')
 # 1.upto(4) { dealer.card_add(array.card_pull) }

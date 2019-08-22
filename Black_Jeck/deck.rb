@@ -4,11 +4,7 @@
 # 20.08.2019
 require_relative 'card'
 
-class CardDeck
-  NAME = %w[2 3 4 5 6 7 8 9 10 V D K T].freeze
-  MARK = %w[+ <3 ^ <>].freeze
-  POINTS = %w[2 3 4 5 6 7 8 9 10 10 10 10 11].freeze
-
+class Deck
   attr_accessor :cards
 
   def initialize
@@ -18,8 +14,10 @@ class CardDeck
   def init_card_deck
     @cards = []
     0.upto(3) do |text|
-      0.upto(NAME.length - 1) do |num|
-        @cards << Card.new(NAME[num], MARK[text], POINTS[num])
+      # 0.upto(Card::NAME.length - 1) do |num|
+      Card::NAME.length.times do |num|
+        @cards << Card.new(Card::NAME[num], Card::MARK[text], \
+                           Card::POINTS[num])
       end
     end
   end
@@ -33,7 +31,7 @@ class CardDeck
   end
 end
 #====================== check ===============================
-# array = CardDeck.new
+# array = Deck.new
 # 0.upto(3) do
 #   puts array.card_pull.card_show
 #   puts array.cards.length
