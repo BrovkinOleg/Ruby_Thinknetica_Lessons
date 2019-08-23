@@ -6,6 +6,8 @@ require_relative 'interface'
 class Game
   attr_reader :player, :dealer, :card_deck, :interface
 
+  BET = 10
+
   def initialize(player, dealer, card_deck)
     @player = player
     @dealer = dealer
@@ -38,9 +40,9 @@ class Game
     @card_deck.mix_cards
     2.times { @player.card_add(@card_deck.card_get) }
     2.times { @dealer.card_add(@card_deck.card_get) }
-    @player.dollars_less(10)
-    @dealer.dollars_less(10)
-    @bank += 20
+    @player.dollars_less(BET)
+    @dealer.dollars_less(BET)
+    @bank += 2 * BET
   end
 
   def dealer_card_add
@@ -52,8 +54,8 @@ class Game
   end
 
   def bank_return
-    @dealer.dollars_add(10)
-    @player.dollars_add(10)
+    @dealer.dollars_add(BET)
+    @player.dollars_add(BET)
     @bank = 0
   end
 

@@ -27,11 +27,10 @@ class Interface
 
   def game_menu_hint
     puts 'Enter your option number'
-    puts '  1: next game round '
-    puts '  2: ask for one card'
-    puts '  3: step missing'
-    puts '  4: open cards'
-    puts '  5: this menu show'
+    puts '  1: ask for one card'
+    puts '  2: step missing'
+    puts '  3: open cards'
+    puts '  4: this menu show'
     puts '  0: exit to main menu'
     puts ''
   end
@@ -82,7 +81,9 @@ class Interface
   end
 
   def start_next_round
+    puts ''
     puts 'Enter \'1\' to start next round of game'
+    puts 'Enter any other digit to start new game'
     puts ''
   end
 

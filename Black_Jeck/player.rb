@@ -7,11 +7,14 @@ require_relative 'deck'
 class Player
   attr_accessor :name
   attr_reader :dollars, :points, :cards
+
+  BANK = 100
+
   def initialize
     @name = ''
     @cards = []
     @points = 0
-    @dollars = 100
+    @dollars = BANK
   end
 
   def init

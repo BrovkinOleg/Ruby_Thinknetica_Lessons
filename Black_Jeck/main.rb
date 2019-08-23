@@ -33,7 +33,7 @@ class Main
   end
 
   def start_new_game
-    @interface.enter_your_name if @game.player.name == ''
+    @interface.enter_your_name
     @game.player.init
     @game.dealer.init
     @game.player.name = @interface.getter_string
@@ -52,11 +52,16 @@ class Main
     loop do
       choice = @interface.getter_digit
       case choice
-      when 1 then next_game
-      when 2 then user_add_card
-      when 3 then dealer_auto_work
-      when 4 then open_cards
-      when 5 then @interface.game_menu_hint
+      when 1 then user_add_card
+      when 2 then dealer_auto_work
+      when 3
+        if open_cards == 1
+          next_game
+        else
+          @interface.main_menu_hint
+          break
+        end
+      when 4 then @interface.game_menu_hint
       when 0
         @interface.main_menu_hint
         break
@@ -92,7 +97,7 @@ class Main
     show_user_and_dealer
     sleep(1)
     @interface.start_next_round
-    @interface.game_menu_hint
+    @interface.getter_digit
   end
 
   def result_calculation
